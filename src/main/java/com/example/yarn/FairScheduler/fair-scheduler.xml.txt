@@ -1,0 +1,66 @@
+
+
+公平調度器，中大型公司主要使用的。
+
+需求：在默認的default隊列基礎之上，再創建兩個隊列，分別是test和atguigu（以用戶所屬組命名）。期望實現下面效果：
+
+提交任務時若指定隊列，則提交至指定隊列運行；
+提交任務時未指定隊列，test用戶提交的任務到test隊列運行，atguigu用戶提交的任務到atguigu隊列運行
+公平調度器的配置涉及到兩個文件，一個是yarn-site.xml，另一個是公平調度器隊列分配文件fair-scheduler.xml（文件名可自定義）。
+
+
+
+----------  fair-scheduler.xml  ---------
+<?xml version="1.0"?>
+<allocations>
+  <!-- 單個隊列中Application Master佔用整個隊列資源的最大比例,取值0-1 ，企業一般配置0.1 ，-->
+  <queueMaxAMShareDefault>0.5</queueMaxAMShareDefault>
+  <!-- 單個隊列最大資源的默認值 test atguigu default -->
+  <queueMaxResourcesDefault>4096mb,4vcores</queueMaxResourcesDefault>
+
+
+  <!-- 增加一個隊列test -->
+  <queue name="test">
+    <!-- 隊列最小資源 -->
+    <minResources>2048mb,2vcores</minResources>
+    <!-- 隊列最大資源 -->
+    <maxResources>4096mb,4vcores</maxResources>
+    <!-- 隊列中最多同時運行的應用數，默認50，根據線程數配置 -->
+    <maxRunningApps>4</maxRunningApps>
+    <!-- 隊列中Application Master佔用資源的最大比例 -->
+    <maxAMShare>0.5</maxAMShare>
+    <!-- 該隊列資源權重,默認值為1.0 -->
+    <weight>1.0</weight>
+    <!-- 隊列內部的資源分配策略 -->
+    <schedulingPolicy>fair</schedulingPolicy>
+  </queue>
+
+
+  <!-- 增加一個隊列atguigu -->
+  <queue name="atguigu" type="parent">
+    <!-- 隊列最小資源 -->
+    <minResources>2048mb,2vcores</minResources>
+    <!-- 隊列最大資源 -->
+    <maxResources>4096mb,4vcores</maxResources>
+    <!-- 隊列中最多同時運行的應用數，默認50，根據線程數配置 -->
+    <maxRunningApps>4</maxRunningApps>
+    <!-- 隊列中Application Master佔用資源的最大比例 -->
+    <maxAMShare>0.5</maxAMShare>
+    <!-- 該隊列資源權重,默認值為1.0 -->
+    <weight>1.0</weight>
+    <!-- 隊列內部的資源分配策略 -->
+    <schedulingPolicy>fair</schedulingPolicy>
+  </queue>
+
+  <!-- 任務隊列分配策略,可配置多層規則,從第一個規則開始匹配,直到匹配成功 -->
+  <queuePlacementPolicy>
+    <!-- 提交任務時指定隊列,如未指定提交隊列,則繼續匹配下一個規則; false表示：如果指定隊列不存在,不允許自動創建-->
+    <rule name="specified" create="false"/>
+    <!-- 提交到root.group.username隊列,若root.group不存在,不允許自動創建；若root.group.user不存在,允許自動創建 -->
+    <rule name="nestedUserQueue" create="true">
+        <rule name="primaryGroup" create="false"/>
+    </rule>
+    <!-- 最後一個規則必須為reject或者default。Reject表示拒絕創建提交失敗，default表示把任務提交到default隊列 -->
+    <rule name="reject" />
+  </queuePlacementPolicy>
+</allocations>

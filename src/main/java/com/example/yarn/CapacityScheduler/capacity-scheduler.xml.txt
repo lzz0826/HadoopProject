@@ -1,0 +1,96 @@
+
+生產環境下怎麼創建隊列？
+
+調度器默認只會開一個default隊列，這個肯定是不滿足生產要求的；
+可以按照框架來劃分隊列。比如說hive/spark/flink的任務分別放在不同的隊列里，不過這麼做的效率不高，企業用的不是很多。
+按照業務模塊來劃分隊列。比如說登錄註冊的業務，單獨一個隊列，購物車單獨一個隊列，下單功能單獨一個隊列，等等；
+創建多隊列的好處？
+
+擔心單一程序耗盡集群所有資源；
+實現任務的降級使用。特殊時期可以保證重要的隊列資源更充足。比如說雙十一的時候，就給下單的那個隊列，多補充資源。
+降級怎麼理解呢，就是隊列之間區分優先級，資源的分配是按照隊列所屬的業務的優先級來進行的。
+
+
+需求1：default隊列佔總內存的40%，最大資源容量佔總資源60%，hive隊列佔總內存的60%，最大資源容量佔總資源80%。
+需求2：配置隊列優先級。
+
+-------------  capacity-scheduler.xml  --------------
+
+<!-- 指定多隊列，增加hive隊列 -->
+<property>
+    <name>yarn.scheduler.capacity.root.queues</name>
+    <value>default,hive</value>
+    <description>
+      The queues at the this level (root is the root queue).
+    </description>
+</property>
+
+<!-- 降低default隊列資源額定容量為40%，默認100% -->
+<property>
+    <name>yarn.scheduler.capacity.root.default.capacity</name>
+    <value>40</value>
+</property>
+
+<!-- 降低default隊列資源最大容量為60%，默認100% -->
+<property>
+    <name>yarn.scheduler.capacity.root.default.maximum-capacity</name>
+    <value>60</value>
+</property>
+（2）為新加隊列添加必要屬性：
+<!-- 指定hive隊列的資源額定容量 -->
+<property>
+    <name>yarn.scheduler.capacity.root.hive.capacity</name>
+    <value>60</value>
+</property>
+
+<!-- 用戶最多可以使用隊列多少資源，1表示 -->
+<property>
+    <name>yarn.scheduler.capacity.root.hive.user-limit-factor</name>
+    <value>1</value>
+</property>
+
+<!-- 指定hive隊列的資源最大容量 -->
+<property>
+    <name>yarn.scheduler.capacity.root.hive.maximum-capacity</name>
+    <value>80</value>
+</property>
+
+<!-- 啟動hive隊列 -->
+<property>
+    <name>yarn.scheduler.capacity.root.hive.state</name>
+    <value>RUNNING</value>
+</property>
+
+<!-- 哪些用戶有權向隊列提交作業 -->
+<property>
+    <name>yarn.scheduler.capacity.root.hive.acl_submit_applications</name>
+    <value>*</value>
+</property>
+
+<!-- 哪些用戶有權操作隊列，管理員權限（查看/殺死） -->
+<property>
+    <name>yarn.scheduler.capacity.root.hive.acl_administer_queue</name>
+    <value>*</value>
+</property>
+
+<!-- 哪些用戶有權配置提交任務優先級 -->
+<property>
+    <name>yarn.scheduler.capacity.root.hive.acl_application_max_priority</name>
+    <value>*</value>
+</property>
+
+<!-- 任務的超時時間設置：yarn application -appId appId -updateLifetime Timeout
+參考資料：https://blog.cloudera.com/enforcing-application-lifetime-slas-yarn/ -->
+
+<!-- 如果application指定了超時時間，則提交到該隊列的application能夠指定的最大超時時間不能超過該值。
+-->
+<property>
+    <name>yarn.scheduler.capacity.root.hive.maximum-application-lifetime</name>
+    <value>-1</value>
+</property>
+
+<!-- 如果application沒指定超時時間，則用default-application-lifetime作為默認值 -->
+<property>
+    <name>yarn.scheduler.capacity.root.hive.default-application-lifetime</name>
+    <value>-1</value>
+</property>

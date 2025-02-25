@@ -1,0 +1,102 @@
+13:36:07.920 [main] INFO  com.example.HdfsClient - info level
+13:36:07.923 [main] WARN  com.example.HdfsClient - warn level
+13:36:07.923 [main] ERROR com.example.HdfsClient - error level
+13:36:07.923 [main] FATAL com.example.HdfsClient - fatal level
+16:25:22.278 [main] INFO  com.example.HdfsClient - ======== heew ========
+16:25:22.280 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:25:22.280 [main] INFO  com.example.HdfsClient - 權限: rwxr-xr-x
+16:25:22.280 [main] INFO  com.example.HdfsClient - 所有者: root
+16:25:22.280 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:25:22.281 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:25:22.281 [main] INFO  com.example.HdfsClient - ======== tmp ========
+16:25:22.281 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:25:22.281 [main] INFO  com.example.HdfsClient - 權限: rwxrwx---
+16:25:22.281 [main] INFO  com.example.HdfsClient - 所有者: root
+16:25:22.281 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:25:22.281 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:25:22.281 [main] INFO  com.example.HdfsClient - ======== wcinput ========
+16:25:22.281 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:25:22.281 [main] INFO  com.example.HdfsClient - 權限: rwxr-xr-x
+16:25:22.281 [main] INFO  com.example.HdfsClient - 所有者: root
+16:25:22.281 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:25:22.282 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:25:22.282 [main] INFO  com.example.HdfsClient - ======== wcoutput ========
+16:25:22.282 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:25:22.282 [main] INFO  com.example.HdfsClient - 權限: rwxr-xr-x
+16:25:22.282 [main] INFO  com.example.HdfsClient - 所有者: root
+16:25:22.282 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:25:22.282 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:26:45.070 [main] INFO  com.example.HdfsClient - ======== heew ========
+16:26:45.073 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:26:45.073 [main] INFO  com.example.HdfsClient - 權限: rwxr-xr-x
+16:26:45.073 [main] INFO  com.example.HdfsClient - 所有者: root
+16:26:45.073 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:26:45.073 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:26:45.073 [main] INFO  com.example.HdfsClient - ======== tmp ========
+16:26:45.074 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:26:45.074 [main] INFO  com.example.HdfsClient - 權限: rwxrwx---
+16:26:45.074 [main] INFO  com.example.HdfsClient - 所有者: root
+16:26:45.074 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:26:45.074 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:26:45.074 [main] INFO  com.example.HdfsClient - ======== wcinput ========
+16:26:45.074 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:26:45.074 [main] INFO  com.example.HdfsClient - 權限: rwxr-xr-x
+16:26:45.074 [main] INFO  com.example.HdfsClient - 所有者: root
+16:26:45.074 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:26:45.074 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:26:45.075 [main] INFO  com.example.HdfsClient - ======== wcoutput ========
+16:26:45.075 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:26:45.075 [main] INFO  com.example.HdfsClient - 權限: rwxr-xr-x
+16:26:45.075 [main] INFO  com.example.HdfsClient - 所有者: root
+16:26:45.075 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:26:45.075 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:26:45.075 [main] INFO  com.example.HdfsClient - ======== xiyou ========
+16:26:45.075 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:26:45.075 [main] INFO  com.example.HdfsClient - 權限: rwxr-xr-x
+16:26:45.075 [main] INFO  com.example.HdfsClient - 所有者: root
+16:26:45.075 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:26:45.075 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:27:57.788 [main] INFO  com.example.HdfsClient - ======== heew ========
+16:27:57.791 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:27:57.791 [main] INFO  com.example.HdfsClient - 權限: rwxr-xr-x
+16:27:57.791 [main] INFO  com.example.HdfsClient - 所有者: root
+16:27:57.791 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:27:57.791 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:27:57.791 [main] INFO  com.example.HdfsClient - ======== tmp ========
+16:27:57.792 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:27:57.792 [main] INFO  com.example.HdfsClient - 權限: rwxrwx---
+16:27:57.792 [main] INFO  com.example.HdfsClient - 所有者: root
+16:27:57.792 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:27:57.792 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:27:57.792 [main] INFO  com.example.HdfsClient - ======== wcinput ========
+16:27:57.792 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:27:57.792 [main] INFO  com.example.HdfsClient - 權限: rwxr-xr-x
+16:27:57.792 [main] INFO  com.example.HdfsClient - 所有者: root
+16:27:57.792 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:27:57.792 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:27:57.793 [main] INFO  com.example.HdfsClient - ======== wcoutput ========
+16:27:57.793 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:27:57.793 [main] INFO  com.example.HdfsClient - 權限: rwxr-xr-x
+16:27:57.793 [main] INFO  com.example.HdfsClient - 所有者: root
+16:27:57.793 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:27:57.793 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:27:57.793 [main] INFO  com.example.HdfsClient - ======== xiyou ========
+16:27:57.793 [main] INFO  com.example.HdfsClient - 類型: 目錄
+16:27:57.793 [main] INFO  com.example.HdfsClient - 權限: rwxr-xr-x
+16:27:57.793 [main] INFO  com.example.HdfsClient - 所有者: root
+16:27:57.793 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:27:57.794 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:30:41.240 [main] INFO  com.example.HdfsClient - ======== huaguoshang ========
+16:30:41.242 [main] INFO  com.example.HdfsClient - 類型: 文件
+16:30:41.242 [main] INFO  com.example.HdfsClient - 大小: 5 bytes
+16:30:41.242 [main] INFO  com.example.HdfsClient - 權限: rw-r--r--
+16:30:41.243 [main] INFO  com.example.HdfsClient - 所有者: root
+16:30:41.243 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:30:41.243 [main] INFO  com.example.HdfsClient - ----------------------------------
+16:30:41.243 [main] INFO  com.example.HdfsClient - ======== te22.txt ========
+16:30:41.243 [main] INFO  com.example.HdfsClient - 類型: 文件
+16:30:41.243 [main] INFO  com.example.HdfsClient - 大小: 5 bytes
+16:30:41.243 [main] INFO  com.example.HdfsClient - 權限: rw-r--r--
+16:30:41.243 [main] INFO  com.example.HdfsClient - 所有者: root
+16:30:41.243 [main] INFO  com.example.HdfsClient - 分組: supergroup
+16:30:41.243 [main] INFO  com.example.HdfsClient - ----------------------------------

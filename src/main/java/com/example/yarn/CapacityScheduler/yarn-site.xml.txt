@@ -1,0 +1,146 @@
+
+
+
+生產環境核心參數配置案例 *每台節點硬體設備不同都要個別判斷
+需求：從1G數據中，統計每個單詞出現次數。服務器3台，每台配置4G內存，4核CPU，4線程。
+塊大小使用默認的128M，1G/128M=8，所以整個任務需要啟用8個MapTask，1個ReduceTask，以及1個MrAppMaster。
+平均每個節點運行（8+1+1）/3台 約等於 3個任務，假設採用4+3+3分佈。
+基於以上需求和硬件條件，可以做出如下思考：
+1G數據量不大，可以使用容量調度器；
+RM處理調度器的線程數量默認50，太大了，沒必要，可以削成8；
+不同節點CPU性能一致，不需要開啟虛擬核；
+其他配置暫且不表。
+
+
+調度器對比:
+調度器類型	         適用場景	                          主要優勢        	    主要缺點
+FIFO Scheduler	     單用戶、無需資源隔離的環境	              簡單、易用	            可能導致資源壟斷
+Capacity Scheduler	 多租戶、企業級 Hadoop 集群(中.小公司)	  保證各部門的資源分配	    配置複雜
+Fair Scheduler	     多應用公平共享資源(大公司)	              動態資源分配，靈活	    可能不適合有嚴格資源保證的場景
+
+----------yarn-site.xml  ---------
+
+<!-- 選擇調度器，默認容量  -->
+<property>
+	<description>The class to use as the resource scheduler.</description>
+	<name>yarn.resourcemanager.scheduler.class</name>
+	<value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler</value>
+</property>
+
+<!-- ResourceManager處理調度器請求的線程數量,默認50；如果提交的任務數大於50，可以增加該值，但是不能超過3台 * 4線程 = 12線程（去除其他應用程序實際不能超過8） -->
+<property>
+	<description>Number of threads to handle scheduler interface.</description>
+	<name>yarn.resourcemanager.scheduler.client.thread-count</name>
+	<value>8</value>
+</property>
+
+<!-- 是否讓yarn自動檢測硬件進行配置，默認是false，如果該節點有很多其他應用程序，建議手動配置。如果該節點沒有其他應用程序，可以採用自動 -->
+<property>
+	<description>Enable auto-detection of node capabilities such as
+	memory and CPU.
+	</description>
+	<name>yarn.nodemanager.resource.detect-hardware-capabilities</name>
+	<value>false</value>
+</property>
+
+<!-- 是否將虛擬核數當作CPU核數，默認是false，採用物理CPU核數 -->
+<property>
+	<description>Flag to determine if logical processors(such as
+	hyperthreads) should be counted as cores. Only applicable on Linux
+	when yarn.nodemanager.resource.cpu-vcores is set to -1 and
+	yarn.nodemanager.resource.detect-hardware-capabilities is true.
+	</description>
+	<name>yarn.nodemanager.resource.count-logical-processors-as-cores</name>
+	<value>false</value>
+</property>
+
+<!-- 虛擬核數和物理核數乘數，默認是1.0 -->
+<property>
+	<description>Multiplier to determine how to convert phyiscal cores to
+	vcores. This value is used if yarn.nodemanager.resource.cpu-vcores
+	is set to -1(which implies auto-calculate vcores) and
+	yarn.nodemanager.resource.detect-hardware-capabilities is set to true. The	number of vcores will be calculated as	number of CPUs * multiplier.
+	</description>
+	<name>yarn.nodemanager.resource.pcores-vcores-multiplier</name>
+	<value>1.0</value>
+</property>
+
+<!-- NodeManager使用內存數，默認8G，修改為4G內存 -->
+<property>
+	<description>Amount of physical memory, in MB, that can be allocated
+	for containers. If set to -1 and
+	yarn.nodemanager.resource.detect-hardware-capabilities is true, it is
+	automatically calculated(in case of Windows and Linux).
+	In other cases, the default is 8192MB.
+	</description>
+	<name>yarn.nodemanager.resource.memory-mb</name>
+	<value>4096</value>
+</property>
+
+<!-- nodemanager的CPU核數，不按照硬件環境自動設定時默認是8個，修改為4個 -->
+<property>
+	<description>Number of vcores that can be allocated
+	for containers. This is used by the RM scheduler when allocating
+	resources for containers. This is not used to limit the number of
+	CPUs used by YARN containers. If it is set to -1 and
+	yarn.nodemanager.resource.detect-hardware-capabilities is true, it is
+	automatically determined from the hardware in case of Windows and Linux.
+	In other cases, number of vcores is 8 by default.</description>
+	<name>yarn.nodemanager.resource.cpu-vcores</name>
+	<value>4</value>
+</property>
+
+<!-- 容器最小內存，默認1G -->
+<property>
+	<description>The minimum allocation for every container request at the RM	in MBs. Memory requests lower than this will be set to the value of this	property. Additionally, a node manager that is configured to have less memory	than this value will be shut down by the resource manager.
+	</description>
+	<name>yarn.scheduler.minimum-allocation-mb</name>
+	<value>1024</value>
+</property>
+
+<!-- 容器最大內存，默認8G，修改為2G -->
+<property>
+	<description>The maximum allocation for every container request at the RM	in MBs. Memory requests higher than this will throw an	InvalidResourceRequestException.
+	</description>
+	<name>yarn.scheduler.maximum-allocation-mb</name>
+	<value>2048</value>
+</property>
+
+<!-- 容器最小CPU核數，默認1個 -->
+<property>
+	<description>The minimum allocation for every container request at the RM	in terms of virtual CPU cores. Requests lower than this will be set to the	value of this property. Additionally, a node manager that is configured to	have fewer virtual cores than this value will be shut down by the resource	manager.
+	</description>
+	<name>yarn.scheduler.minimum-allocation-vcores</name>
+	<value>1</value>
+</property>
+
+<!-- 容器最大CPU核數，默認4個，修改為2個 -->
+<property>
+	<description>The maximum allocation for every container request at the RM	in terms of virtual CPU cores. Requests higher than this will throw an
+	InvalidResourceRequestException.</description>
+	<name>yarn.scheduler.maximum-allocation-vcores</name>
+	<value>2</value>
+</property>
+
+<!-- 虛擬內存檢查，默認打開，修改為關閉 -->
+<property>
+	<description>Whether virtual memory limits will be enforced for
+	containers.</description>
+	<name>yarn.nodemanager.vmem-check-enabled</name>
+	<value>false</value>
+</property>
+
+<!-- 虛擬內存和物理內存設置比例,默認2.1 -->
+<property>
+	<description>Ratio between virtual memory to physical memory when	setting memory limits for containers. Container allocations are	expressed in terms of physical memory, and virtual memory usage	is allowed to exceed this allocation by this ratio.
+	</description>
+	<name>yarn.nodemanager.vmem-pmem-ratio</name>
+	<value>2.1</value>
+</property>
+
+
+<!-- 配置任務的優先級總級數 優先級越高的任務，會優先進行資源的分配。 -->
+<property>
+    <name>yarn.cluster.max-application-priority</name>
+    <value>5</value>
+</property>
