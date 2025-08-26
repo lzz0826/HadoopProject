@@ -82,6 +82,7 @@ Datanode 無暴露端口需要使用指令查詢docker容器ip
 <br />
 docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' e66558c3d824
 <br />
+<br />
 Mac解決方式配合nginx反向代理:
 <br />
 在宿主機 /etc/hosts 補上：  sudo nano /etc/hosts
