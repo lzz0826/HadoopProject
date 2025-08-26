@@ -81,6 +81,14 @@ http://localhost:9870/<br />
 Datanode 無暴露端口需要使用指令查詢docker容器ip
 <br />
 docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' e66558c3d824
+<br />
+Mac解決方式配合nginx反向代理:
+<br />
+在宿主機 /etc/hosts 補上：  sudo nano /etc/hosts
+<br />
+127.0.0.1 datanode01
+<br />
+127.0.0.1 datanode02
 
 # 配置擋使用時備註需刪除:
 # config.env:
